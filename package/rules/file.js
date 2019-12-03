@@ -13,7 +13,7 @@ module.exports = {
       options: {
         name(file) {
           if(isSymLink){
-              return 'media' + file.replace(realPath, '')+ '[name]-[hash].[ext]'
+              return 'media' + file.replace(realPath, '').split('.')[0] + '-[hash].[ext]'
           }
           if (file.includes(sourcePath)) {
             return 'media/[path][name]-[hash].[ext]'
