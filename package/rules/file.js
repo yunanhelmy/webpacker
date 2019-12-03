@@ -2,8 +2,12 @@ const { join } = require('path')
 const { source_path: sourcePath, static_assets_extensions: fileExtensions } = require('../config')
 
 const fs = require('fs')
-const isSymLink = fs.lstatSync(sourcePath.split('/').shift()).isSymbolicLink()
-const realPath = fs.realpathSync(sourcePath.split('/').shift()) + sourcePath.replace(sourcePath.split('/').shift(), '')
+var isSymLink = false
+var realPath = null
+if(sourcePath.split('/').shift().length > 2){
+  isSymLink = fs.lstatSync(sourcePath.split('/').shift()).isSymbolicLink()
+  realPath = fs.realpathSync(sourcePath.split('/').shift()) + sourcePath.replace(sourcePath.split('/').shift(), '')
+}
 
 module.exports = {
   test: new RegExp(`(${fileExtensions.join('|')})$`, 'i'),
